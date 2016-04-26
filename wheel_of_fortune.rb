@@ -1,14 +1,33 @@
 class WheelOfFortune
-  def initialize
-    p "Happy coding!"
+  attr_reader :theme, :guesses
+
+  def initialize(input)
+    @phrase = input[:phrase]
+    @theme = input[:theme]
+    @guesses = []
   end
 
   def to_s
-    nil
+
+    # USE REGEX AND REPLACE INSTEAD OF SPLITTING INTO AN ARRAY, DUH.
+    # hidden_phrase = @phrase.downcase.split('')
+    # !!!! need to replace anything not guessed with an '_'  !!!!
+    guesses_string = @guesses.join
+    p "--------"
+    p guesses_string
+    regex_phrase = "/[" + guesses_string + "]/"
+    p regex_phrase
+    hidden_phrase = @phrase.gsub(regex_phrase.chomp, '_')
+    p "///////////"
+    p hidden_phrase
+    hidden_phrase
   end
 
   def can_i_have?(input)
-    nil
+    input = input.downcase
+    @phrase = @phrase.downcase
+    @guesses << input
+    @phrase.include? input
   end
 
   def game_over?
