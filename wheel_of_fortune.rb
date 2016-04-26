@@ -8,31 +8,31 @@ class WheelOfFortune
   end
 
   def to_s
+    return @phrase if @guesses == []
 
-    guessed = @guesses.join.to_s.strip.downcase
-
+    @guessed = @guesses.join.to_s.strip
     alphabet = "abcdefghijklmnopqrstuvwxyz"
-    filtered_alpha = alphabet.gsub(/#{guessed}/, '')
-    wtf = @phrase.gsub(/#{filtered_alpha}/, '_')
-
-    p "-------"
-    p guessed
-    p "filtered = " + filtered_alpha
-    p wtf
-    
-    @phrase.gsub(/#{filtered_alpha}/, '_')
-
+    filtered_alpha = alphabet.gsub(/[#{@guessed}]/i, '')
+    @subbed = @phrase.gsub(/[#{filtered_alpha}]/i, '_')
+    @subbed
   end
 
   def can_i_have?(input)
     input = input.downcase
-    @phrase = @phrase.downcase
+    phrase_downcase = @phrase.downcase
     @guesses << input
-    @phrase.include? input
+    phrase_downcase.include? input
   end
 
   def game_over?
-    nil
+    subber = @guesses.join.to_s.strip
+    if @phrase.gsub(/[#{subber}]/i, '').strip == ""
+      p true
+      return true
+    else
+      p false
+      return false
+    end
   end
 end
 
