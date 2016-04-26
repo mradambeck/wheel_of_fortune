@@ -9,18 +9,19 @@ class WheelOfFortune
 
   def to_s
 
-    # USE REGEX AND REPLACE INSTEAD OF SPLITTING INTO AN ARRAY, DUH.
-    # hidden_phrase = @phrase.downcase.split('')
-    # !!!! need to replace anything not guessed with an '_'  !!!!
-    guesses_string = @guesses.join
-    p "--------"
-    p guesses_string
-    regex_phrase = "/[" + guesses_string + "]/"
-    p regex_phrase
-    hidden_phrase = @phrase.gsub(regex_phrase.chomp, '_')
-    p "///////////"
-    p hidden_phrase
-    hidden_phrase
+    guessed = @guesses.join.to_s.strip.downcase
+
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    filtered_alpha = alphabet.gsub(/#{guessed}/, '')
+    wtf = @phrase.gsub(/#{filtered_alpha}/, '_')
+
+    p "-------"
+    p guessed
+    p "filtered = " + filtered_alpha
+    p wtf
+    
+    @phrase.gsub(/#{filtered_alpha}/, '_')
+
   end
 
   def can_i_have?(input)
