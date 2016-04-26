@@ -9,11 +9,12 @@ class WheelOfFortune
 
   def to_s
     return @phrase if @guesses == []
-
-    @guessed = @guesses.join.to_s.strip
+    @guessed = @guesses.join.to_s.gsub(/\s+/, '')
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     filtered_alpha = alphabet.gsub(/[#{@guessed}]/i, '')
     @subbed = @phrase.gsub(/[#{filtered_alpha}]/i, '_')
+    p @guessed
+    p @subbed
     @subbed
   end
 
@@ -25,12 +26,12 @@ class WheelOfFortune
   end
 
   def game_over?
-    subber = @guesses.join.to_s.strip
-    if @phrase.gsub(/[#{subber}]/i, '').strip == ""
-      p true
+    subber = @guesses.join.downcase.gsub(/\s+/, '')
+    check = @phrase.downcase.gsub(/\s+/, '')
+    if check.gsub(/[#{subber}]/i, '') == ""
       return true
     else
-      p false
+      p "Hit false"
       return false
     end
   end
